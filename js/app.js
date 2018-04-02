@@ -1,3 +1,9 @@
+var seconds = 00; 
+var tens = 00; 
+var appendTens = document.getElementById("tens")
+var appendSeconds = document.getElementById("seconds")
+var Interval ;
+
 let memGameInit = {
     deckOfCards : document.getElementsByClassName("card-image"),
     deckOfCardParents : document.getElementsByClassName("card"),
@@ -39,7 +45,47 @@ let memGameInit = {
       for (let i = 0; i < memGameInit.deckOfCards.length; i++) {
         memGameInit.deckOfCards[i].classList.add(memGameInit.randomClassStyles[i]);
       }
+    },
+    timerReset : function() {
+        clearInterval(Interval);
+       tens = "00";
+         seconds = "00";
+       appendTens.innerHTML = tens;
+         appendSeconds.innerHTML = seconds;
+     },
+    timerStop : function() {
+        clearInterval(Interval);
+   },
+   timerStart : function() {
+      
+    clearInterval(Interval);
+    Interval = setInterval(memGameInit.startTimer, 10);
+ }, startTimer :     function () {
+    tens++; 
+    
+    if(tens < 9){
+      appendTens.innerHTML = "0" + tens;
     }
+    
+    if (tens > 9){
+      appendTens.innerHTML = tens;
+      
+    } 
+    
+    if (tens > 99) {
+      console.log("seconds");
+      seconds++;
+      appendSeconds.innerHTML = "0" + seconds;
+      tens = 0;
+      appendTens.innerHTML = "0" + 0;
+    }
+    
+    if (seconds > 9){
+      appendSeconds.innerHTML = seconds;
+    }
+  
+  }
+
   };
   let memGameValues = {
     moveCounter: 0,
@@ -48,6 +94,7 @@ let memGameInit = {
   };
   
   memGameInit.deckListener.addEventListener("click", function(e) {
+    memGameInit.timerStart();
     const currentCardClass = e.target.querySelector("i").classList[2];
     document.getElementsByClassName('moves')[0].textContent = memGameValues.moveCounter;
     if (e.target !== memGameValues.lastCardValue) {
@@ -77,6 +124,7 @@ let memGameInit = {
         memGameValues.lastCardValue = null
         console.log(document.querySelectorAll('.match').length)
         if (document.querySelectorAll('.match').length === 16) {
+            memGameInit.timerStop();
             document.getElementById('starFinal').textContent = memGameValues.starRating;
             document.getElementById('movesFinal').textContent = memGameValues.moveCounter;
             openNav();
@@ -111,6 +159,8 @@ let memGameInit = {
   memGameInit.shuffleClassStyles(memGameInit.randomClassStyles);
   memGameInit.removeClassStyles();
   memGameInit.applyClassStyles();
+  memGameInit.timerStop();
+  memGameInit.timerReset();
   document.getElementsByClassName('moves')[0].textContent = memGameValues.moveCounter;
   closeNav();
   };
