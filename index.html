@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Matching Game</title>
@@ -8,6 +9,7 @@
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
     <link rel="stylesheet" href="css/app.css">
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -15,17 +17,27 @@
         </header>
 
         <section class="score-panel">
-        	<ul class="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        	</ul>
+            <ul class="stars">
+                <li>
+                    <i class="fa fa-star"></i>
+                </li>
+                <li>
+                    <i class="fa fa-star"></i>
+                </li>
+                <li>
+                    <i class="fa fa-star"></i>
+                </li>
+            </ul>
 
-        	<span class="moves"></span> Moves
-            <div class="timer"><span id="seconds">00</span>:<span id="tens">00</span></div>
+            <span class="moves"></span> Moves
+            <!-- Stopwatch style timer display !-->
+            <div class="timer">
+                <span id="seconds">00</span>:
+                <span id="tens">00</span>
+            </div>
             <div class="restart">
-        		<i class="fa fa-repeat"></i>
-        	</div>
+                <i class="fa fa-repeat"></i>
+            </div>
         </section>
 
         <ul class="deck">
@@ -80,19 +92,21 @@
         </ul>
     </div>
     <!-- The overlay -->
-<div id="myNav" class="overlay">
-  
-    <!-- Overlay content -->
-    <div class="overlay-content">
-      <span>Star Rating: <b id="starFinal"></b></span>
-      <span>Moves: <b id="movesFinal"></b></span>
-      <span class="restart">Play Again?</span>
+    <div id="myNav" class="overlay">
+
+        <!-- Overlay scores etc -->
+        <div class="overlay-content">
+            <span>Star Rating:
+                <b id="starFinal"></b>
+            </span>
+            <span>Moves:
+                <b id="movesFinal"></b>
+            </span>
+            <span class="restart">Play Again?</span>
+        </div>
+
     </div>
-  
-  </div>
-  
-  <!-- Use any element to open/show the overlay navigation menu -->
-  <span onclick="openNav()">open</span>
     <script src="js/app.js"></script>
 </body>
+
 </html>
