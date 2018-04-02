@@ -1,4 +1,7 @@
 let memGameInit = {
+    deckOfCards : document.getElementsByClassName("card-image"),
+    deckOfCardParents : document.getElementsByClassName("card"),
+    deckListener : document.querySelector(".deck"),
     randomClassStyles: [
       "fa-anchor",
       "fa-anchor",
@@ -23,10 +26,18 @@ let memGameInit = {
         [array[i], array[j]] = [array[j], array[i]];
       }
     },
+    removeClassStyles : function(){
+        const differentCardStyles = ['open','match','show','fail'];
+        for (let i = 0; i < memGameInit.deckOfCardParents.length; i++) {
+          memGameInit.deckOfCardParents[i].classList.remove(...differentCardStyles);
+        }
+        for (let i = 0; i < memGameInit.deckOfCards.length; i++) {
+          memGameInit.deckOfCards[i].classList.remove(...memGameInit.randomClassStyles);
+        }
+    },
     applyClassStyles: function() {
-      const deckOfCards = document.getElementsByClassName("card-image");
-      for (let i = 0; i < deckOfCards.length; i++) {
-        deckOfCards[i].classList.add(memGameInit.randomClassStyles[i]);
+      for (let i = 0; i < memGameInit.deckOfCards.length; i++) {
+        memGameInit.deckOfCards[i].classList.add(memGameInit.randomClassStyles[i]);
       }
     }
   };
@@ -36,9 +47,7 @@ let memGameInit = {
     starRating: 3
   };
   
-  const deckListener = document.querySelector(".deck");
-  
-  deckListener.addEventListener("click", function(e) {
+  memGameInit.deckListener.addEventListener("click", function(e) {
     const currentCardClass = e.target.querySelector("i").classList[2];
     document.getElementsByClassName('moves')[0].textContent = memGameValues.moveCounter;
     if (e.target !== memGameValues.lastCardValue) {
@@ -92,11 +101,24 @@ let memGameInit = {
     }
   });
   
+  function initialiseGame() {
+  memGameValues.moveCounter = 0;
+  memGameValues.lastCardValue = null;
+  const starElement = document.getElementsByClassName('stars')[0];
+  for (let i = 0; i < starElement.querySelectorAll('i').length; i++) {
+     starElement.querySelectorAll('i')[i].classList.add('fa-star');
+  }
   memGameInit.shuffleClassStyles(memGameInit.randomClassStyles);
+  memGameInit.removeClassStyles();
   memGameInit.applyClassStyles();
   document.getElementsByClassName('moves')[0].textContent = memGameValues.moveCounter;
-  
+  closeNav();
+  };
 
+  initialiseGame();
+  const restartButtons = document.querySelectorAll('.restart');
+  restartButtons[0].addEventListener('click', initialiseGame)
+  restartButtons[1].addEventListener('click', initialiseGame) 
   /* Open when someone clicks on the span element */
 function openNav() {
     document.getElementById("myNav").style.width = "100%";
