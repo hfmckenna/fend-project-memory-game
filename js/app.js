@@ -31,39 +31,23 @@ let memGameInit = {
     }
   };
   let memGameValues = {
-    turnCounter: 0,
     moveCounter: 0,
-    lastCardValue: null
+    lastCardValue: null,
+    starRating: 3
   };
   
   const deckListener = document.querySelector(".deck");
   
   deckListener.addEventListener("click", function(e) {
     const currentCardClass = e.target.querySelector("i").classList[2];
+    document.getElementsByClassName('moves')[0].textContent = memGameValues.moveCounter;
     if (e.target !== memGameValues.lastCardValue) {
     switch (true) {
-      case memGameValues.turnCounter === 0 && !memGameValues.lastCardValue:
-        // start timer
+      case !memGameValues.lastCardValue:
         e.target.classList.add("open")
         e.target.classList.add("show")
         memGameValues.lastCardValue = e.target
-        memGameValues.turnCounter++
-        console.log(1)
-        break;
-      case memGameValues.turnCounter > 0 && !memGameValues.lastCardValue:
-        e.target.classList.add("open")
-        e.target.classList.add("show")
-        memGameValues.lastCardValue = e.target
-        memGameValues.turnCounter++
-        console.log(2)
-        break;
-      case memGameValues.lastCardValue.querySelector("i").classList[2] === currentCardClass:
-        e.target.classList.add("match")
-        memGameValues.lastCardValue.classList.add("match")
-        memGameValues.lastCardValue.classList.remove("open")
-        memGameValues.lastCardValue.classList.remove("show")
-        memGameValues.lastCardValue = null
-        console.log(3)
+        memGameValues.moveCounter++
         break;
       case memGameValues.lastCardValue.querySelector("i").classList[2] !== currentCardClass &&
         memGameValues.lastCardValue !== null:
@@ -73,12 +57,52 @@ let memGameInit = {
         memGameValues.lastCardValue.classList.remove("show")
         setTimeout(function (){
         e.target.classList.remove("fail");
-        e.target.classList.remove("show");},1000)
+        e.target.classList.remove("show");},500)
         memGameValues.lastCardValue = null
-        console.log(4)
+        break;
+      case memGameValues.lastCardValue.querySelector("i").classList[2] === currentCardClass:
+        e.target.classList.add("match")
+        memGameValues.lastCardValue.classList.add("match")
+        memGameValues.lastCardValue.classList.remove("open")
+        memGameValues.lastCardValue.classList.remove("show")
+        memGameValues.lastCardValue = null
+        console.log(document.querySelectorAll('.match').length)
+        if (document.querySelectorAll('.match').length === 16) {
+            document.getElementById('starFinal').textContent = memGameValues.starRating;
+            document.getElementById('movesFinal').textContent = memGameValues.moveCounter;
+            openNav();
+        }
         break;
     }
     };
+    const starElement = document.getElementsByClassName('stars')[0];
+    switch (true) {
+        case (memGameValues.moveCounter === 16) && memGameValues.lastCardValue !== null:
+        starElement.getElementsByClassName('fa-star')[0].classList.remove('fa-star')
+        memGameValues.starRating --
+        break;
+        case (memGameValues.moveCounter === 32) && memGameValues.lastCardValue !== null:
+        starElement.getElementsByClassName('fa-star')[0].classList.remove('fa-star')
+        memGameValues.starRating --
+        break;
+        case (memGameValues.moveCounter === 48) && memGameValues.lastCardValue !== null:
+        starElement.getElementsByClassName('fa-star')[0].classList.remove('fa-star')
+        memGameValues.starRating --
+        break;
+    }
   });
+  
   memGameInit.shuffleClassStyles(memGameInit.randomClassStyles);
   memGameInit.applyClassStyles();
+  document.getElementsByClassName('moves')[0].textContent = memGameValues.moveCounter;
+  
+
+  /* Open when someone clicks on the span element */
+function openNav() {
+    document.getElementById("myNav").style.width = "100%";
+}
+
+/* Close when someone clicks on the "x" symbol inside the overlay */
+function closeNav() {
+    document.getElementById("myNav").style.width = "0%";
+}
