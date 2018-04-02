@@ -62,13 +62,26 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    transform: rotateY(0);
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+    transition: 500ms ease all;
+    transition-delay: 200ms;
 }
 
 .deck .card.open {
-    transform: rotateY(0);
+    transform: rotateY(180);
     background: #02b3e4;
     cursor: default;
+    transition: 500ms ease all;
+    transition-delay: 200ms;
+}
+
+.deck .card.fail {
+    transform: rotateY(180);
+    background: red;
+    cursor: default;
+    transition: 500ms ease all;
+    transition-delay: 200ms;
 }
 
 .deck .card.show {
