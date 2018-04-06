@@ -1,8 +1,14 @@
-var seconds = 00;
-var tens = 00;
-var appendTens = document.getElementById("tens")
-var appendSeconds = document.getElementById("seconds")
-var Interval; //Global variables need tidying up, struggled to get it working in primary object
+let timer = {
+  seconds : 0,
+  secondsContent : document.getElementById('seconds'),
+  interval : 0,
+  increment : undefined
+}
+
+function secondsCounter() {
+  timer.seconds += 1;
+  timer.secondsContent.textContent = timer.seconds;
+}
 
 let memGameInit = {
   deckOfCards: document.getElementsByClassName("card-image"),
@@ -45,48 +51,7 @@ let memGameInit = {
     for (let i = 0; i < memGameInit.deckOfCards.length; i++) {
       memGameInit.deckOfCards[i].classList.add(memGameInit.randomClassStyles[i]);
     }
-  },
-  timerReset: function () { //Timer functionality, method naming follows stopwatch functionality
-    clearInterval(Interval);
-    tens = "00";
-    seconds = "00";
-    appendTens.innerHTML = tens;
-    appendSeconds.innerHTML = seconds;
-  },
-  timerStop: function () {
-    clearInterval(Interval);
-  },
-  timerStart: function () {
-
-    clearInterval(Interval);
-    Interval = setInterval(memGameInit.startTimer, 10);
-  },
-  startTimer: function () {
-    tens++;
-
-    if (tens < 9) {
-      appendTens.innerHTML = "0" + tens;
-    }
-
-    if (tens > 9) {
-      appendTens.innerHTML = tens;
-
-    }
-
-    if (tens > 99) {
-      console.log("seconds");
-      seconds++;
-      appendSeconds.innerHTML = "0" + seconds;
-      tens = 0;
-      appendTens.innerHTML = "0" + 0;
-    }
-
-    if (seconds > 9) {
-      appendSeconds.innerHTML = seconds;
-    }
-
   }
-
 };
 //Object specific to game "scores"
 let memGameValues = {
@@ -97,9 +62,11 @@ let memGameValues = {
 
 //Lots of conditions to trigger on a single click, will need tidying up and more condsideation made for the event loop
 memGameInit.deckListener.addEventListener("click", function (e) {
-  memGameInit.timerStart(); //Start timer
   const currentCardClass = e.target.querySelector("i").classList[2]; //Find the value of the randomised class
-  document.getElementsByClassName('moves')[0].textContent = memGameValues.moveCounter; //Update move counter
+  document.getElementsByClassName('moves')[0].textContent = memGameValues.moveCounter;
+  if (memGameValues.moveCounter === 0) {
+    timer.increment = setInterval(secondsCounter, 1000);
+  } //Update move counter
   if (e.target !== memGameValues.lastCardValue) { //if statement prevents double clicks on same class, needs refinement
     switch (true) { //Two switch statements, look into different methods that don't use breaks
       case !memGameValues.lastCardValue:
@@ -126,9 +93,9 @@ memGameInit.deckListener.addEventListener("click", function (e) {
         memGameValues.lastCardValue.classList.remove("open")
         memGameValues.lastCardValue.classList.remove("show")
         memGameValues.lastCardValue = null
+        clearInterval(timer.increment)
         console.log(document.querySelectorAll('.match').length)
         if (document.querySelectorAll('.match').length === 16) {
-          memGameInit.timerStop();
           document.getElementById('starFinal').textContent = memGameValues.starRating;
           document.getElementById('movesFinal').textContent = memGameValues.moveCounter;
           openOverlay();
@@ -156,6 +123,9 @@ memGameInit.deckListener.addEventListener("click", function (e) {
 function initialiseGame() { //another large function that could be implemented with other events than a single trigger
   memGameValues.moveCounter = 0;
   memGameValues.lastCardValue = null;
+  clearInterval(timer.increment)
+  timer.seconds = 0;
+  timer.secondsContent.textContent = timer.seconds;
   const starElement = document.getElementsByClassName('stars')[0];
   for (let i = 0; i < starElement.querySelectorAll('i').length; i++) {
     starElement.querySelectorAll('i')[i].classList.add('fa-star');
@@ -163,8 +133,6 @@ function initialiseGame() { //another large function that could be implemented w
   memGameInit.shuffleClassStyles(memGameInit.randomClassStyles);
   memGameInit.removeClassStyles();
   memGameInit.applyClassStyles();
-  memGameInit.timerStop();
-  memGameInit.timerReset();
   document.getElementsByClassName('moves')[0].textContent = memGameValues.moveCounter;
   closeOverlay();
 };
