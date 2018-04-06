@@ -5,6 +5,8 @@ let timer = {
   increment : undefined
 }
 
+const overlayElement = document.querySelector("#finalScores");
+let currentCardClass;
 function secondsCounter() {
   timer.seconds += 1;
   timer.secondsContent.textContent = timer.seconds;
@@ -62,11 +64,12 @@ let memGameValues = {
 
 //Lots of conditions to trigger on a single click, will need tidying up and more condsideation made for the event loop
 memGameInit.deckListener.addEventListener("click", function (e) {
-  const currentCardClass = e.target.querySelector("i").classList[2]; //Find the value of the randomised class
+  if (e.target.classList[0] !== 'deck') {
+  currentCardClass = e.target.querySelector("i").classList[2]; //Find the value of the randomised class
   document.getElementsByClassName('moves')[0].textContent = memGameValues.moveCounter;
   if (memGameValues.moveCounter === 0) {
     timer.increment = setInterval(secondsCounter, 1000);
-  } //Update move counter
+  }
   if (e.target !== memGameValues.lastCardValue) { //if statement prevents double clicks on same class, needs refinement
     switch (true) { //Two switch statements, look into different methods that don't use breaks
       case !memGameValues.lastCardValue:
@@ -84,7 +87,7 @@ memGameInit.deckListener.addEventListener("click", function (e) {
         setTimeout(function () {
           e.target.classList.remove("fail");
           e.target.classList.remove("show");
-        }, 500)
+        }, 1000)
         memGameValues.lastCardValue = null
         break;
       case memGameValues.lastCardValue.querySelector("i").classList[2] === currentCardClass:
@@ -93,11 +96,12 @@ memGameInit.deckListener.addEventListener("click", function (e) {
         memGameValues.lastCardValue.classList.remove("open")
         memGameValues.lastCardValue.classList.remove("show")
         memGameValues.lastCardValue = null
-        clearInterval(timer.increment)
+        
         console.log(document.querySelectorAll('.match').length)
-        if (document.querySelectorAll('.match').length === 16) {
+        if (document.querySelectorAll('.match').length > 15) {
           document.getElementById('starFinal').textContent = memGameValues.starRating;
           document.getElementById('movesFinal').textContent = memGameValues.moveCounter;
+          clearInterval(timer.increment);
           openOverlay();
         }
         break;
@@ -118,7 +122,7 @@ memGameInit.deckListener.addEventListener("click", function (e) {
       memGameValues.starRating--
         break;
   }
-});
+}});
 
 function initialiseGame() { //another large function that could be implemented with other events than a single trigger
   memGameValues.moveCounter = 0;
@@ -140,13 +144,15 @@ function initialiseGame() { //another large function that could be implemented w
 initialiseGame();
 
 const restartButtons = document.querySelectorAll('.restart');
-restartButtons[0].addEventListener('click', initialiseGame)
-restartButtons[1].addEventListener('click', initialiseGame)
+restartButtons[0].addEventListener('click', initialiseGame);
+restartButtons[1].addEventListener('click', initialiseGame);
+
+
 
 function openOverlay() {
-  document.getElementById("myNav").style.width = "100%";
+  overlayElement.classList.add("finalOverlay");
 }
 
 function closeOverlay() {
-  document.getElementById("myNav").style.width = "0%";
+  overlayElement.classList.remove("finalOverlay");
 }

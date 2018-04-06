@@ -1,3 +1,18 @@
+@media screen and (max-width: 400px) {
+    .deck {
+        width: 330px;
+        min-height: 340px;
+        margin: 0 0 2em;
+        padding: 8px;
+    }
+    .deck .card {
+        min-width: 48px;
+    }
+    .overlay-content {
+        font-size: 1rem;
+    }
+}
+
 html {
     box-sizing: border-box;
 }
@@ -14,6 +29,7 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
+    font-size: 16px;
 }
 
 body {
@@ -122,85 +138,47 @@ h1 {
     display: inline-block;
 }
 
-.score-panel .restart {
-    float: right;
+
+.restart {
     cursor: pointer;
 }
 
-/* The Overlay (background) */
+.score-panel .restart {
+    float: right;
+}
 
 .overlay {
-    /* Height & width depends on how you want to reveal the overlay (see JS below) */
     height: 100%;
-    width: 0;
+    width: 100%;
     position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Sit on top */
-    left: 0;
     top: 0;
-    background-color: rgb(0, 0, 0);
-    /* Black fallback color */
-    background-color: rgba(0, 0, 0, 0.9);
-    /* Black w/opacity */
-    overflow-x: hidden;
-    /* Disable horizontal scroll */
-    transition: 0.5s;
-    /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+    left: 0;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transition: 1s;
+    visibility: hidden;
+    text-align: center;
+    font-size: 2rem;
+    color:rgba(255, 255, 255, 0);
 }
-
-/* Position the content inside the overlay */
 
 .overlay-content {
-    position: relative;
-    top: 25%;
-    /* 25% from the top */
-    width: 100%;
-    /* 100% width */
-    text-align: center;
-    /* Centered text/links */
-    margin-top: 30px;
-    /* 30px top margin to avoid conflict with the close button on smaller screens */
+    margin-top: 100px;
 }
-
-/* The navigation links inside the overlay */
 
 .overlay span {
-    padding: 8px;
-    text-decoration: none;
-    font-size: 36px;
-    color: #818181;
     display: block;
-    /* Display block instead of inline */
-    transition: 0.3s;
-    /* Transition effects on hover (color) */
 }
 
-/* When you mouse over the navigation links, change their color */
-
-.overlay span:hover,
-.overlay a:focus {
-    color: #f1f1f1;
+.overlay a {
+    style: none;
 }
 
-/* Position the close button (top right corner) */
-
-.overlay .closebtn {
-    position: absolute;
-    top: 20px;
-    right: 45px;
-    font-size: 60px;
+.finalOverlay {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: rgba(255, 255, 255, 1);
+    visibility: visible;
 }
 
-/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
-
-@media screen and (max-height: 450px) {
-    .overlay a {
-        font-size: 20px
-    }
-    .overlay .closebtn {
-        font-size: 40px;
-        top: 15px;
-        right: 35px;
-    }
-}
