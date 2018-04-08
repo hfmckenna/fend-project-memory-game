@@ -2,19 +2,20 @@
 
 ## Table of Contents
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+* [Comments](#comments)
+* [Improvements](#improvements)
 
-## Instructions
+## Comments
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+I've made few modifications to the HTML of the project. Really just relating to the score board and restart buttons. Some CSS has been changed so the game works better on multiple devices. It's not responsive to "accordion" dragging of the browser, as this often made the buttons hard to identify and push. So a single simple media query was added to keep things in a square on screens lack the height to properly represent a square.
 
-To get started, open `js/app.js` and start building out the app's functionality
+The javascript uses a lot of case switching triggered on single event listener. I understand there will be a better way of doing this but at least it avoids too many nested if statements. Will research the role of objects, ternary operators and similar to better understand the role they play in interactivity.
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+Otherwise I'm happy enough that I've avoided global variables and my objects hopefully follow some kind of logic that makes things easier to follow.
 
-## Contributing
+## Improvements
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+- Would be good to fine tune the CSS to make better use of screen real estate.
+- Look at cookies for storing high scores
+- Make my javascript less contingent on specific layouts and so easier to update & improve.
+- Improve naming conventions in JS.
