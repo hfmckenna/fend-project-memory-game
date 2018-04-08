@@ -98,7 +98,7 @@ memGameInit.deckListener.addEventListener("click", function (e) {
         memGameValues.lastCardValue = null
         
         console.log(document.querySelectorAll('.match').length)
-        if (document.querySelectorAll('.match').length > 15) {
+        if (document.querySelectorAll('.match').length === 16) {
           document.getElementById('starFinal').textContent = memGameValues.starRating;
           document.getElementById('movesFinal').textContent = memGameValues.moveCounter;
           clearInterval(timer.increment);

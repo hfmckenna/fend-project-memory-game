@@ -1,17 +1,4 @@
-@media screen and (max-width: 400px) {
-    .deck {
-        width: 330px;
-        min-height: 340px;
-        margin: 0 0 2em;
-        padding: 8px;
-    }
-    .deck .card {
-        min-width: 48px;
-    }
-    .overlay-content {
-        font-size: 1rem;
-    }
-}
+
 
 html {
     box-sizing: border-box;
@@ -56,20 +43,21 @@ h1 {
 
 .deck {
     width: 660px;
-    min-height: 680px;
+    height: 680px;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
     padding: 32px;
     border-radius: 10px;
     box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
     display: flex;
     flex-wrap: wrap;
+    flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
-    margin: 0 0 3em;
+    margin: 0 0 1em;
 }
 
 .deck .card {
-    height: 125px;
+    min-height: 125px;
     width: 125px;
     background: #2e3d49;
     font-size: 0;
@@ -182,3 +170,24 @@ h1 {
     visibility: visible;
 }
 
+
+
+
+@media screen and (max-height: 800px) {
+    .deck {
+        width: 368px;
+        height: 380px;
+        padding: 6px;
+        margin: 0;
+    }
+    .deck .card {
+        min-height: 22%;
+        width: 22%;
+        min-width: 48px;
+        padding: 0;
+        margin: 1%;
+    }
+    .overlay-content {
+        font-size: 4rem;
+    }
+}
