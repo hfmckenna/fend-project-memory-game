@@ -1,5 +1,3 @@
-
-
 html {
     box-sizing: border-box;
 }
@@ -169,10 +167,9 @@ h1 {
     color: rgba(255, 255, 255, 1);
     visibility: visible;
 }
-
-
-
-
+/*
+Allows screens with insufficient height to display the game
+*/
 @media screen and (max-height: 800px) {
     .deck {
         width: 368px;
