@@ -74,32 +74,31 @@ memGameInit.deckListener.addEventListener("click", function (e) {
     if (e.target !== memGameValues.lastCardValue) { //if statement prevents double clicks on same class, needs refinement
       switch (true) { //Two switch statements, look into different methods that don"t use breaks
         case !memGameValues.lastCardValue:
-          e.target.classList.add("open")
-          e.target.classList.add("show")
-          memGameValues.lastCardValue = e.target
-          memGameValues.moveCounter++
+          e.target.classList.add("open");
+          e.target.classList.add("show");
+          memGameValues.lastCardValue = e.target;
+          memGameValues.moveCounter++;
             break;
         case memGameValues.lastCardValue.querySelector("i").classList[2] !== currentCardClass &&
         memGameValues.lastCardValue !== null:
-          e.target.classList.add("fail")
-          e.target.classList.add("show")
-          memGameValues.lastCardValue.classList.remove("open")
-          memGameValues.lastCardValue.classList.remove("show")
+          e.target.classList.add("fail");
+          e.target.classList.add("show");
+          memGameValues.lastCardValue.classList.remove("open");
+          memGameValues.lastCardValue.classList.remove("show");
           setTimeout(function () {
             e.target.classList.remove("fail");
             e.target.classList.remove("show");
-          }, 1000)
-          memGameValues.lastCardValue = null
+          }, 1000);
+          memGameValues.lastCardValue = null;
           break;
         case memGameValues.lastCardValue.querySelector("i").classList[2] === currentCardClass:
-          e.target.classList.add("match")
-          memGameValues.lastCardValue.classList.add("match")
-          memGameValues.lastCardValue.classList.remove("open")
-          memGameValues.lastCardValue.classList.remove("show")
-          memGameValues.lastCardValue = null
-
-          console.log(document.querySelectorAll(".match").length)
+          e.target.classList.add("match");
+          memGameValues.lastCardValue.classList.add("match");
+          memGameValues.lastCardValue.classList.remove("open");
+          memGameValues.lastCardValue.classList.remove("show");
+          memGameValues.lastCardValue = null;
           if (document.querySelectorAll(".match").length === 16) {
+            document.getElementById("timerDisplay").textContent = timer.seconds;
             document.getElementById("starFinal").textContent = memGameValues.starRating;
             document.getElementById("movesFinal").textContent = memGameValues.moveCounter;
             clearInterval(timer.increment);
@@ -107,20 +106,16 @@ memGameInit.deckListener.addEventListener("click", function (e) {
           }
           break;
       }
-    };
+    }
     const starElement = document.getElementsByClassName("stars")[0];
     switch (true) {
       case (memGameValues.moveCounter === 16) && memGameValues.lastCardValue !== null:
-        starElement.getElementsByClassName("fa-star")[0].classList.remove("fa-star")
-        memGameValues.starRating--
+        starElement.getElementsByClassName("fa-star")[0].classList.remove("fa-star");
+        memGameValues.starRating--;
           break;
       case (memGameValues.moveCounter === 32) && memGameValues.lastCardValue !== null:
-        starElement.getElementsByClassName("fa-star")[0].classList.remove("fa-star")
-        memGameValues.starRating--
-          break;
-      case (memGameValues.moveCounter === 48) && memGameValues.lastCardValue !== null:
-        starElement.getElementsByClassName("fa-star")[0].classList.remove("fa-star")
-        memGameValues.starRating--
+        starElement.getElementsByClassName("fa-star")[0].classList.remove("fa-star");
+        memGameValues.starRating--;
           break;
     }
   }
@@ -130,7 +125,7 @@ function initialiseGame() { //another large function that could be implemented w
   memGameValues.moveCounter = 0; //restart move "score"
   document.getElementsByClassName("moves")[0].textContent = memGameValues.moveCounter;
   memGameValues.lastCardValue = null; //makes sure the event target isn"t stored for tests on first click
-  clearInterval(timer.increment)
+  clearInterval(timer.increment);
   timer.seconds = 0; //reset timer counter to zero
   timer.secondsContent.textContent = timer.seconds; //reflow timer to show zero again
   const starElement = document.getElementsByClassName("stars")[0];
@@ -142,7 +137,7 @@ function initialiseGame() { //another large function that could be implemented w
   memGameInit.applyClassStyles(); //classes are crucial to the game logic, so these 3 functions make sure they"re initialised fully
   if (overlayElement.classList[1] === "finalOverlay")
     {closeOverlay();}
-};
+}
 
 initialiseGame();
 
